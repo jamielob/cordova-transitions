@@ -1,10 +1,10 @@
 {
-  "name": "npm-base",
-  "version": "1.0.0",
-  "description": "A base NPM package for writing a NPM package in ES2015",
+  "name": "react-cordova-transitions",
+  "version": "0.1.0",
+  "description": "A simple api for adding Cordova transitions to your mobile react apps.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kadirahq/npm-base.git"
+    "url": "https://github.com/jamielob/react-cordova-transitions.git"
   },
   "license": "MIT",
   "options": {
