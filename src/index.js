@@ -1,5 +1,3 @@
-import _ from 'underscore';
-
 // Internal current _options object
 let _options = {};
 
@@ -33,20 +31,7 @@ export const setTransitionOptions = (options) => {
 
 // Make the transition happen
 export const makeTransition = (options) => {
-  // If there are options passed in
-  // and the options haven't been manipulated ahead of time (e.g. back button)
-  // Set the transition options
-  // if (options && _.isEqual(_options, _defaultOptions)) {
-  console.log(_options);
-
   setTransitionOptions(options);
-  // } else {
-    // Otherwise add the passed in options, keeping the originals
-    // i.e. only take the passed in options that don't exists already
-    // _options = Object.assign({}, options, _options);
-  // }
-  console.log(options);
-  console.log(_options);
 
   // Check if we should make a header/footer adjustment
   if (_lastPageOptions.header && _options.header) {
