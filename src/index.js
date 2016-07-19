@@ -5,54 +5,51 @@ let _options = {};
 let _lastPageOptions = {};
 
 // Internal default options, can be set by user using setDefaultTransitionOptions
-const _defaultOptions = {
+let _defaultOptions = {
   type: 'slide',
 };
 
-// Reset the options back to defaults
+// Allow users to set the default options
+export const setDefaultTransitionOptions = (options) => {
+  _defaultOptions = Object.assign({}, options);
+};
+
+// Function to reset the options back to the defaults
 export const resetTransitionOptions = () => {
   // Clone the defaults and reset the options
-  const resetOptions = {};
-  Object.assign(resetOptions, _defaultOptions);
-  _options = resetOptions;
+  _options = Object.assign({}, _defaultOptions);
 };
 // Call this once to set the initial options
 resetTransitionOptions();
 
-// Set the default options
-export const setDefaultTransitionOptions = (options) => {
-  Object.assign(_defaultOptions, options);
-};
-
-// Set the options for the next transition
+// Function to set the options for the next transition
 export const setTransitionOptions = (options) => {
-  _options = Object.assign({}, options, _options);
+  Object.assign(_options, options);
 };
 
 // Make the transition happen
 export const makeTransition = (options) => {
   setTransitionOptions(options);
 
-  // Check if we should make a header/footer adjustment
+  // Debug
+  // console.log(_lastPageOptions);
+  // console.log(options);
+  // console.log(_options);
+
+  // Only adjust for header/footer if both destination and origin agree
   if (_lastPageOptions.header && _options.header) {
     _options.fixedPixelsTop = _options.header;
   }
 
   // Clone and cache the current options
-  // We use the page options that are passed in as opposed to _options
-  // so that we can check for headers and footers
-  // As opposed to _options which may be set by another page
-  const currentOptions = {};
-  Object.assign(currentOptions, options);
-  _lastPageOptions = currentOptions;
+  _lastPageOptions = Object.assign({}, _options);
 
-  // Make sure we have access to the cordova plugin
+  // Transition if on cordova
   const nativepagetransitions = window.plugins && window.plugins.nativepagetransitions || false;
-  if (!nativepagetransitions || !_options.type) {
-    resetTransitionOptions();
-    return;
+  if (nativepagetransitions && _options.type) {
+    nativepagetransitions[_options.type](_options);
   }
-  nativepagetransitions[_options.type](_options);
+
   resetTransitionOptions();
 };
 
